@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'ngCordova'])
+angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,10 +20,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    Parse.initialize("YOUR APP ID", "JAVASCRIPT KEY")
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+/*.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('map', {
     url: '/',
@@ -32,7 +33,29 @@ angular.module('starter', ['ionic', 'ngCordova'])
   });
 
   $urlRouterProvider.otherwise("/");
-})
+})*/
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+  .state('login', {
+    url: '/',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  })
+  .state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html',
+    controller: 'LoginCtrl'
+  });
+  .state('map', {
+    url: '/map',
+    templateUrl: 'templates/map.html',
+    controller: 'MapCtrl'
+  });
+ 
+  $urlRouterProvider.otherwise("/");
+ })
+
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
   var options = {timeout: 5000, enableHighAccuracy: true};
