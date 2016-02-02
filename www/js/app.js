@@ -54,7 +54,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   $scope.data = {};
   
   $scope.signupEmail = function() {
-    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+    var ref = new Firebase("https://spansnap.firebaseio.com");
     ref.createUser({
       email    : $scope.data.email,
       password : $scope.data.password
@@ -68,7 +68,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   };
   
   $scope.loginEmail = function() {
-    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+    var ref = new Firebase("https://spansnap.firebaseio.com");
     ref.authWithPassword({
       email    : $scope.data.email,
       password : $scope.data.password
@@ -83,7 +83,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   };
 
   $scope.loginFacebook = function(){
-    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+    var ref = new Firebase("https://spansnap.firebaseio.com");
     
     if(ionic.Platform.isWebView()){
       $cordovaFacebook.login(["public_profile", "email"]).then(function(success){
@@ -144,14 +144,6 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   });
 });
 
-
-
-
-
-
-
-cordova -d plugin add phonegap-facebook-plugin --variable APP_ID="1642322472696714
-" --variable APP_NAME="spansnaps"
 
 
 
