@@ -24,37 +24,94 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   });
 })
 
-/*.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
-  .state('map', {
-    url: '/',
-    templateUrl: 'templates/map.html',
-    controller: 'MapCtrl'
-  });
-
-  $urlRouterProvider.otherwise("/");
-})*/
-
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('login', {
     url: '/',
     templateUrl: 'templates/login.html',
-    controller: 'LoginCtrl'
+    controller:  'LoginCtrl'
   })
   .state('signup', {
     url: '/signup',
     templateUrl: 'templates/signup.html',
-    controller: 'LoginCtrl'
-  });
+    controller:  'LoginCtrl'
+  })
+  .state('signin', {
+    url: '/signin',
+    templateUrl: 'templates/signin.html',
+    controller:  'LoginCtrl'
+  })
   .state('map', {
     url: '/map',
     templateUrl: 'templates/map.html',
-    controller: 'MapCtrl'
-  });
+    controller:  'MapCtrl'
+  })
  
   $urlRouterProvider.otherwise("/");
- })
+})
+
+.controller('LoginCtrl', function($scope, $state, $cordovaFacebook) {
+  $scope.data = {};
+  
+  $scope.signupEmail = function() {
+    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+    ref.createUser({
+      email    : $scope.data.email,
+      password : $scope.data.password
+      }, function(error, userData) {
+        if (error) {
+        console.log("Error creating user:", error);
+      } else {
+        console.log("Successfully created user account with uid:", userData.uid);
+      }
+    });
+  };
+  
+  $scope.loginEmail = function() {
+    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+    ref.authWithPassword({
+      email    : $scope.data.email,
+      password : $scope.data.password
+      }, 
+      function(error, authData) {
+        if (error) {
+          console.log("Login Failed!", error);
+      } else {
+          console.log("Authenticated successfully with payload:", authData);
+      }
+    });
+  };
+
+  $scope.loginFacebook = function(){
+    var ref = new Firebase("https://<YOUR-FIREBASE-APP>.firebaseio.com");
+    
+    if(ionic.Platform.isWebView()){
+      $cordovaFacebook.login(["public_profile", "email"]).then(function(success){
+      console.log(success);
+      ref.authWithOAuthToken("facebook", success.authResponse.accessToken, function(error, authData) {
+        if (error) {
+          console.log('Firebase login failed!', error);
+        } else {
+          console.log('Authenticated successfully with payload:', authData);
+        }
+      });
+ 
+    }, function(error){
+      console.log(error);
+    });        
+ 
+    }
+    else {
+      ref.authWithOAuthPopup("facebook", function(error, authData) {
+        if (error) {
+          console.log("Login Failed!", error);
+        } else {
+          console.log("Authenticated successfully with payload:", authData);
+        }
+      });
+    }
+  };
+})
 
 
 .controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
@@ -93,7 +150,8 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
 
 
 
-
+cordova -d plugin add phonegap-facebook-plugin --variable APP_ID="1642322472696714
+" --variable APP_NAME="spansnaps"
 
 
 
