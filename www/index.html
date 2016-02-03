@@ -35,7 +35,24 @@
 
   </head>
   <body ng-app="starter">
-
+    
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1642322472696714',
+          xfbml      : true,
+          version    : 'v2.5'
+        });
+      };
+    
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
 
     <ion-nav-bar align-title="center" class="bar-calm nav-title-slide-ios7">
       <ion-nav-back-button class="button-clear">

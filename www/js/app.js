@@ -56,16 +56,15 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   $scope.signupEmail = function() {
     var ref = new Firebase("https://fiery-heat-2673.firebaseio.com");
     ref.createUser({
-      username : $scope.data.username,
       email    : $scope.data.email,
       password : $scope.data.password
       }, function(error, userData) {
         if (error) {
-        console.log("Error creating user:", error);
-      } else {
-        console.log("Successfully created user account with uid:", userData.uid);
-        // redirect to map.html
-        $window.location.href='#/map';
+          console.log("Error creating user:", error);
+        } else {
+          console.log("Successfully created user account with uid:", userData.uid);
+          // redirect to map.html
+          $window.location.href='#/map';
       }
     });
   };
