@@ -152,9 +152,22 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   }, function (error) {
       console.log("Could not get a location");
   });
-});
+})
 
-
+.controller('CameraCtrl', function($scope, Camera) {
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+    }, function(err) {
+      console.log(err);
+    }, {
+      quality: 75,
+      targetWidth: 320,
+      targetHeight: 320,
+      saveToPhotoAlbum: true
+    });
+  }
+})
 
 
 

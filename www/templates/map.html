@@ -1,5 +1,16 @@
 <ion-view>
 	<ion-content>
 		<div id="map" data-tap-disabled="true"></div>
+		<button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
+    <img ng-src="{{lastPhoto}}" style="max-width: 100%">
+    <body ng-app="starter" ng-controller="MainCtrl">
+    <ion-header-bar>
+      <h1 class="title">Photos</h1>
+    </ion-header-bar>
+    <ion-content padding="true">
+      <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
+      <img ng-src="{{lastPhoto}}" style="max-width: 100%">
+    </ion-content>
+  </body>
 	</ion-content>
 </ion-view>
