@@ -54,8 +54,9 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   $scope.data = {};
   
   $scope.signupEmail = function() {
-    var ref = new Firebase("https://spansnap.firebaseio.com");
+    var ref = new Firebase("https://fiery-heat-2673.firebaseio.com");
     ref.createUser({
+      username : $scope.data.username,
       email    : $scope.data.email,
       password : $scope.data.password
       }, function(error, userData) {
@@ -68,11 +69,12 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   };
   
   $scope.loginEmail = function() {
-    var ref = new Firebase("https://spansnap.firebaseio.com");
-    ref.authWithPassword({
-      email    : $scope.data.email,
+    var ref = new Firebase("https://fiery-heat-2673.firebaseio.com");
+    var credentials = {
+      email : $scope.data.email,
       password : $scope.data.password
-      }, 
+    }
+    ref.authWithPassword(credentials, 
       function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
@@ -83,7 +85,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   };
 
   $scope.loginFacebook = function(){
-    var ref = new Firebase("https://spansnap.firebaseio.com");
+    var ref = new Firebase("https://fiery-heat-2673.firebaseio.com");
     
     if(ionic.Platform.isWebView()){
       $cordovaFacebook.login(["public_profile", "email"]).then(function(success){
