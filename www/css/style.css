@@ -1,1 +1,9 @@
 /* Empty. Add your own CSS if you like */
+
+.ion-camera {
+	font-size: 100px;
+	float: right;
+	color: black;
+	margin-right: 50px;
+	margin-top: 25px;
+}
