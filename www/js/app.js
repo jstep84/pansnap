@@ -61,6 +61,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
       }, function(error, userData) {
         if (error) {
           console.log("Error creating user:", error);
+          alert("Error creating user:" + error);
         } else {
           console.log("Successfully created user account with uid:", userData.uid);
           // redirect to map.html
@@ -79,6 +80,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
       function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
+          alert("Login Failed!" + error);
         } else {
           console.log("Authenticated successfully with payload:", authData);
           // redirect to map.html
