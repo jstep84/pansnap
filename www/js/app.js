@@ -154,20 +154,26 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   });
 })
 
-.controller('CameraCtrl', function($scope, Camera) {
-  $scope.getPhoto = function() {
-    Camera.getPicture().then(function(imageURI) {
-      console.log(imageURI);
-    }, function(err) {
-      console.log(err);
-    }, {
+.controller('CameraCtrl', function($scope, $cordovaCamera) {
+  $scope.takePhoto = function() {
+    var options = {
       quality: 75,
-      targetWidth: 320,
-      targetHeight: 320,
-      saveToPhotoAlbum: true
+      destinationType : Camera.DestinationType.DATA_URL, 
+      sourceType      : Camera.PictureSourceType.CAMERA, 
+      allowEdit       : true,
+      encodingType    : Camera.EncodingType.JPEG,
+      targetWidth     : 300,
+      targetHeight    : 300,
+      popoverOptions  : CameraPopoverOptions,
+      saveToPhotoAlbum: false
+    };
+    $cordovaCamera.getPhoto(options).then(function(imageData) {
+      $scope.imgURI = "data:image/jpeg;base64," + imageData;
+    }, function(err) {
+      console.log(error);
     });
   }
-})
+});
 
 
 
