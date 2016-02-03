@@ -67,12 +67,6 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
         console.log("Successfully created user account with uid:", userData.uid);
         // redirect to map.html
         $window.location.href='#/map';
-          console.log("Error creating user:", error);
-          alert("Error creating user:" + error);
-        } else {
-          console.log("Successfully created user account with uid:", userData.uid);
-          // redirect to map.html
-          $window.location.href='#/map';
       }
     });
   };
