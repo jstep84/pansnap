@@ -1,13 +1,17 @@
 <ion-view>
 	<ion-content>
 		<div id="map" data-tap-disabled="true"></div>
-		<button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
-    <img ng-src="{{lastPhoto}}" style="max-width: 100%">
     <body ng-app="starter" ng-controller="CameraCtrl">
-    <ion-content padding="true">
-      <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
-      <img ng-src="{{lastPhoto}}" style="max-width: 100%">
-    </ion-content>
-  </body>
+      <ion-content ng-controller="CameraCtrl">
+        <i class="ion-camera" ng-click="takePicture()">
+      </ion-content>
+  	</body>
 	</ion-content>
 </ion-view>
+
+
+<!-- ion-camera -->
+
+<!-- http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css -->
+
+<!-- <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button> -->
