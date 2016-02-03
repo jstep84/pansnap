@@ -64,6 +64,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
         console.log("Error creating user:", error);
       } else {
         console.log("Successfully created user account with uid:", userData.uid);
+        // redirect to map.html
       }
     });
   };
@@ -80,6 +81,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
           console.log("Login Failed!", error);
       } else {
           console.log("Authenticated successfully with payload:", authData);
+          // redirect to map.html
       }
     });
   };
