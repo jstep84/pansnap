@@ -135,10 +135,10 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
     
     google.maps.event.addListenerOnce($scope.map, 'idle', function() {
-    var marker = new google.maps.Marker({
-      map: $scope.map,
-      animation: google.maps.Animation.DROP,
-      position: latLng
+      var marker = new google.maps.Marker({
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        position: latLng
     });
     var infoWindow = new google.maps.InfoWindow({
       content: "Here I am!"
@@ -147,8 +147,8 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
       infoWindow.open($scope.map, marker);
     });
   });
-}, function (error) {
-    console.log("Could not get a location");
+  }, function (error) {
+      console.log("Could not get a location");
   });
 });
 
