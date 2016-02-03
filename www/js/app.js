@@ -50,7 +50,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   $urlRouterProvider.otherwise("/");
 })
 
-.controller('LoginCtrl', function($scope, $state, $cordovaFacebook) {
+.controller('LoginCtrl', function($scope, $state, $cordovaFacebook, $window) {
   $scope.data = {};
   
   $scope.signupEmail = function() {
@@ -65,6 +65,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
       } else {
         console.log("Successfully created user account with uid:", userData.uid);
         // redirect to map.html
+        $window.location.href='#/map';
       }
     });
   };
@@ -79,9 +80,10 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
       function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
-      } else {
+        } else {
           console.log("Authenticated successfully with payload:", authData);
           // redirect to map.html
+          $window.location.href='#/map';      
       }
     });
   };
@@ -97,6 +99,8 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
           console.log('Firebase login failed!', error);
         } else {
           console.log('Authenticated successfully with payload:', authData);
+          // redirect to map.html
+          $window.location.href='#/map';
         }
       });
  
