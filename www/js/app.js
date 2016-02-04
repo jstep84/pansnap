@@ -8,13 +8,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins && window.cordove.plugins.Keyboard) {
-      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-      // for form inputs)
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-
-      // Don't remove this line unless you know what you are doing. It stops the viewport
-      // from snapping when text inputs are focused. Ionic handles this internally for
-      // a much nicer keyboard experience.
       cordova.plugins.Keyboard.disableScroll(true);
     }
     if(window.StatusBar) {
@@ -26,25 +20,29 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
+  
   .state('login', {
-    url: '/',
-    templateUrl: 'templates/login.html',
-    controller:  'LoginCtrl'
+    url         : '/',
+    templateUrl : 'templates/login.html',
+    controller  :  'LoginCtrl'
   })
+  
   .state('signup', {
-    url: '/signup',
-    templateUrl: 'templates/signup.html',
-    controller:  'LoginCtrl'
+    url         : '/signup',
+    templateUrl : 'templates/signup.html',
+    controller  :  'LoginCtrl'
   })
+  
   .state('signin', {
-    url: '/signin',
-    templateUrl: 'templates/signin.html',
-    controller:  'LoginCtrl'
+    url         : '/signin',
+    templateUrl : 'templates/signin.html',
+    controller  :  'LoginCtrl'
   })
+  
   .state('map', {
-    url: '/map',
-    templateUrl: 'templates/map.html',
-    controller:  'MapCtrl'
+    url         : '/map',
+    templateUrl : 'templates/map.html',
+    controller  :  'MapCtrl'
   })
  
   $urlRouterProvider.otherwise("/");
@@ -61,28 +59,29 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
       password : $scope.data.password
       }, function(error, userData) {
         if (error) {
-        console.log("Error creating user:", error);
-        alert("Error creating user:" + error);
+          console.log("Error creating user:", error);
+          alert("Error creating user:" + error);
       } else {
-        console.log("Successfully created user account with uid:", userData.uid);
-        // redirect to map.html
-        $window.location.href='#/map';
+          console.log("Successfully created user account with uid:", userData.uid);
+          // redirect to map.html
+          $window.location.href='#/map';
       }
     });
   };
   
   $scope.loginEmail = function() {
-    var ref = new Firebase("https://fiery-heat-2673.firebaseio.com");
+    var ref         = new Firebase("https://fiery-heat-2673.firebaseio.com");
     var credentials = {
-      email : $scope.data.email,
+      email    : $scope.data.email,
       password : $scope.data.password
     }
+    
     ref.authWithPassword(credentials, 
       function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
           alert("Login Failed!" + error);
-        } else {
+      } else {
           console.log("Authenticated successfully with payload:", authData);
           // redirect to map.html
           $window.location.href='#/map';      
@@ -99,7 +98,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
       ref.authWithOAuthToken("facebook", success.authResponse.accessToken, function(error, authData) {
         if (error) {
           console.log('Firebase login failed!', error);
-        } else {
+      } else {
           console.log('Authenticated successfully with payload:', authData);
           // redirect to map.html
           $window.location.href='#/map';
@@ -115,7 +114,7 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
       ref.authWithOAuthPopup("facebook", function(error, authData) {
         if (error) {
           console.log("Login Failed!", error);
-        } else {
+      } else {
           console.log("Authenticated successfully with payload:", authData);
         }
       });
@@ -146,10 +145,10 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
     
     map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
     var myLocation = new google.maps.Marker({
-        icon       : {
-          path       : google.maps.SymbolPath.CIRCLE,
-          scale      : 4,
-          color      : 'blue',
+        icon : {
+          path               : google.maps.SymbolPath.CIRCLE,
+          scale              : 4,
+          color              : 'blue',
           enableHighAccuracy : false,
         },
         position  : new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
@@ -158,77 +157,14 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
         animation : google.maps.Animation.FADE
     });
     
-    var lat = pos.coords.latitude;
-    lat = Math.floor(lat*1000+0.5)/1000;
-    
-    var long = pos.coords.longitude;
-    long = Math.floor(long*1000+0.5)/1000;
-    
+    var lat = Math.floor(pos.coords.latitude * 1000 + 0.5) / 1000;
+    var long = Math.floor(pos.coords.longitude * 1000 + 0.5) / 1000;
+
     posArray.push(lat, long);
     console.log(posArray);
+
   });
 });
-/*.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
-  var options = {timeout: 5000, enableHighAccuracy: true};
-
-  $cordovaGeolocation
-    .getCurrentPosition(options)
-    .then(function(position) {
-      var latLng     = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      var mapOptions = {
-        center    : latLng,
-        zoom      : 18,
-        mapTypeId : google.maps.MapTypeId.ROADMAP
-    };
-
-
-  var watch = $cordovaGeolocation.watchPosition({
-    frequency          : 1000,
-    timeout            : 3000,
-    enableHighAccuracy : true
-  });
-
-  watch.promise.then(
-    function() {
-    },
-    function(err){
-    },
-    function(position) {
-      console.log('update');
-      var lat = position.coords.latitude;
-      var long = position.coords.longitude;
-    }
-  );
-
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    
-    google.maps.event.addListenerOnce($scope.map, 'idle', function() {
-      var marker = new google.maps.Marker({
-        map: $scope.map,
-        animation : google.maps.Animation.DROP,
-        position  : latLng,
-        draggable : true,
-        icon      : {
-          path    : google.maps.SymbolPath.CIRCLE,
-          scale   : 8,
-          color   : 'blue'
-        }
-    });
-    
-    var infoWindow = new google.maps.InfoWindow({
-      content: "Here I am!"
-    });
-
-    google.maps.event.addListener(marker, 'click', function() {
-      infoWindow.open($scope.map, marker);
-    });
-
-  });
-  }, function (error) {
-      console.log("Could not get a location");
-  });
-
-});*/
 
 
 
