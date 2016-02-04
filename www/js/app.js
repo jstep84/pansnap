@@ -157,8 +157,14 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
         title     : "My Location",
         animation : google.maps.Animation.FADE
     });
-    // posArray.push(pos.coords.latitude, pos.Geoposition.coords.longitude);
-    posArray.push(pos.coords.latitude, pos.coords.longitude);
+    
+    var lat = pos.coords.latitude;
+    lat = Math.floor(lat*1000+0.5)/1000;
+    
+    var long = pos.coords.longitude;
+    long = Math.floor(long*1000+0.5)/1000;
+    
+    posArray.push(lat, long);
     console.log(posArray);
   });
 });
