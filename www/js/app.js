@@ -123,8 +123,43 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   };
 })
 
+.controller('MapCtrl', function($scope, $ionicLoading) {
+  var myLatlng   = new google.maps.LatLng(37.3000, -120.4833);
+  var mapOptions = {
+    center       : myLatlng,
+    zoom         : 16,
+    MapTypeId    : google.maps.MapTypeId.ROADMAP
+  };
 
-.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+  var map         =  new google.maps.Map(document.getElementById("map"), mapOptions);
+  var marker      =  new google.maps.Marker({
+    position      :  myLatlng,
+    map           :  map,
+    draggable     :  true,
+    animation     :  google.maps.Animation.DROP
+  });
+
+    navigator.geolocation.watchPosition(function(pos) {
+    map.setCenter(   new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+    var myLocation = new google.maps.Marker({
+        icon      : {
+        path      : google.maps.SymbolPath.CIRCLE,
+        scale     : 8,
+        fillColor : 'blue'
+      },  
+      position:   new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+      map         : map,
+      title       : "My Location",
+      animation   : google.maps.Animation.DROP
+    });
+  });
+  
+  $scope.map = map;
+
+});
+
+
+/*.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
   var options = {timeout: 5000, enableHighAccuracy: true};
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
@@ -140,7 +175,8 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
       var marker = new google.maps.Marker({
         map: $scope.map,
         animation: google.maps.Animation.DROP,
-        position: latLng
+        position: latLng,
+        draggable:true
     });
     var infoWindow = new google.maps.InfoWindow({
       content: "Here I am!"
@@ -152,7 +188,20 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
   }, function (error) {
       console.log("Could not get a location");
   });
-});
+    navigator.geolocation.watchPosition(function(pos) {
+    map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+    var myLocation = new google.maps.Marker({
+      position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
+      map: map,
+      title: "My Location"
+    });
+
+  });
+
+ 
+        $scope.map = map;
+});*/
+
 
 
 
