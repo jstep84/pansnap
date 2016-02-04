@@ -139,22 +139,27 @@ angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
     animation :  google.maps.Animation.FADE
   });
 
+  var posArray = [];
+
+
   navigator.geolocation.watchPosition(function(pos) {
     
     map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-    
     var myLocation = new google.maps.Marker({
         icon       : {
-        path       : google.maps.SymbolPath.CIRCLE,
-        scale      : 4,
-        color      : 'blue',
-        enableHighAccuracy : true,
+          path       : google.maps.SymbolPath.CIRCLE,
+          scale      : 4,
+          color      : 'blue',
+          enableHighAccuracy : false,
         },
         position  : new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
         map       : map,
         title     : "My Location",
         animation : google.maps.Animation.FADE
     });
+    // posArray.push(pos.coords.latitude, pos.Geoposition.coords.longitude);
+    posArray.push(pos.coords.latitude, pos.coords.longitude);
+    console.log(posArray);
   });
 });
 /*.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
