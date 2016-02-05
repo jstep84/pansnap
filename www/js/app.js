@@ -1,7 +1,7 @@
 var pansnap = angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
-var fb       = new Firebase("https://imagemap.firebaseio.com/");
+var fb       = new Firebase("https://fiery-heat-2673.firebaseio.com/");
 
-.run(function($ionicPlatform) {
+pansnap.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins && window.cordove.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -10,11 +10,10 @@ var fb       = new Firebase("https://imagemap.firebaseio.com/");
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-    Parse.initialize("YOUR APP ID", "JAVASCRIPT KEY")
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+pansnap.config(function($stateProvider, $urlRouterProvider) {
   
   $stateProvider
   
@@ -119,9 +118,43 @@ var fb       = new Firebase("https://imagemap.firebaseio.com/");
 })
 
 
-.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+pansnap.controller('MapCtrl', function($scope, $state, $ionicHistory, $firebaseArray, $cordovaCamera, $cordovaGeolocation) {
   var options  = { enableHighAccuracy: true};
   var posArray = [];
+
+  $ionicHistory.clearHistory();
+  $scope.images = [];
+
+  var fbAuth = fb.getAuth();
+  if(fbAuth) {
+    var userReference = fb.child("users/" + fbAuth.uid);
+    var syncArray     = $firebaseArray(userReference.child("images"));
+    $scope.images     = syncArray;
+  } else {
+    $state.go("firebase");
+  }
+
+  $scope.upload = function() {
+    var options = {
+      quality          : 75,
+      destinationType  : Camera.DestinationType.DATA_URL,
+      sourceType       : Camera.PictureSourceType.CAMERA,
+      allowEdit        : true,
+      encodingType     : Camera.EncodingType.JPEG,
+      popoverOptions   : CameraPopoverOptions,
+      targetWidth      : 500,
+      targetHeight     : 500,
+      saveToPhotoAlbum : false
+    };
+
+    $cordovaCamera.getPicture(options).then(function(imageData) {
+        syncArray.$add({image: imageData}).then(function(){
+          alert("Image saved");
+        });
+      }, function(error) {
+          console.error("ERROR: " + error);
+    });
+  } 
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
   
