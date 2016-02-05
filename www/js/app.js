@@ -1,4 +1,5 @@
-angular.module('starter', ['ionic', 'firebase', 'ngCordova'])
+var pansnap = angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
+var fb       = new Firebase("https://imagemap.firebaseio.com/");
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
