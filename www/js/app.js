@@ -145,13 +145,12 @@ pansnap.controller('MapCtrl', function($scope, $state, $ionicHistory, $firebaseA
           path               : google.maps.SymbolPath.CIRCLE,
           scale              : 4,
           color              : 'blue',
-          enableHighAccuracy : true
-        },
+          enableHighAccuracy : true,
+          },
         position  : new google.maps.LatLng(lat, long),
         map       : $scope.map,
-        animation : google.maps.Animation.DROP,
-        position  : latLng
-      });
+        animation : google.maps.Animation.DROP
+        });
       
       posArray.push(lat, long);
       console.log(posArray);
