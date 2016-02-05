@@ -44,7 +44,7 @@ pansnap.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise("/");
 })
 
-.controller('LoginCtrl', function($scope, $state, $cordovaFacebook, $window) {
+pansnap.controller('LoginCtrl', function($scope, $state, $cordovaFacebook, $window) {
   $scope.data = {};
   
   $scope.signupEmail = function() {
@@ -84,37 +84,6 @@ pansnap.config(function($stateProvider, $urlRouterProvider) {
     });
   };
 
-  $scope.loginFacebook = function(){
-    var ref = new Firebase("https://fiery-heat-2673.firebaseio.com");
-    
-    if(ionic.Platform.isWebView()){
-      $cordovaFacebook.login(["public_profile", "email"]).then(function(success){
-      console.log(success);
-      ref.authWithOAuthToken("facebook", success.authResponse.accessToken, function(error, authData) {
-        if (error) {
-          console.log('Firebase login failed!', error);
-      } else {
-          console.log('Authenticated successfully with payload:', authData);
-          // redirect to map.html
-          $window.location.href='#/map';
-        }
-      });
- 
-    }, function(error){
-      console.log(error);
-    });        
- 
-    }
-    else {
-      ref.authWithOAuthPopup("facebook", function(error, authData) {
-        if (error) {
-          console.log("Login Failed!", error);
-      } else {
-          console.log("Authenticated successfully with payload:", authData);
-        }
-      });
-    }
-  };
 })
 
 
