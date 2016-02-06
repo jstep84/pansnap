@@ -13,81 +13,65 @@ pansnap.run(function($ionicPlatform) {
   });
 })
 
-pansnap.config(function($stateProvider, $urlRouterProvider) {
-  
+pansnap.config(function($stateProvider, $urlRouterProvider) { 
   $stateProvider
   
-  .state('login', {
-    url         : '/',
-    templateUrl : 'templates/login.html',
-    controller  :  'LoginCtrl'
+  .state('firebase', {
+    url         : '/firebase',
+    templateUrl : 'templates/firebase.html',
+    controller  : 'FirebaseCtrl',
+    cache       : false
   })
   
-  .state('signup', {
-    url         : '/signup',
-    templateUrl : 'templates/signup.html',
-    controller  :  'LoginCtrl'
+  .state('secure', {
+    url         : '/secure',
+    templateUrl : 'templates/secure.html',
+    controller  :  'SecureCtrl'
   })
   
-  .state('signin', {
-    url         : '/signin',
-    templateUrl : 'templates/signin.html',
-    controller  :  'LoginCtrl'
-  })
-  
-    .state('map', {
+  /*.state('map', {
     url         : '/map',
     templateUrl : 'templates/map.html',
     controller  :  'MapCtrl'
   })
- 
-  $urlRouterProvider.otherwise("/");
+*/ 
+  $urlRouterProvider.otherwise("/firebase");
 })
 
-pansnap.controller('LoginCtrl', function($scope, $state, $cordovaFacebook, $window) {
-  $scope.data = {};
+pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $window) {
+  var fbAuth = $firebaseAuth(fb);
   
-  $scope.signupEmail = function() {
-    var ref = new Firebase("https://fiery-heat-2673.firebaseio.com");
-    ref.createUser({
-      username : $scope.data.username,
-      email    : $scope.data.email,
-      password : $scope.data.password
-      }, function(error, userData) {
-        if (error) {
-          console.log("Error creating user:", error);
-          alert("Error creating user:" + error);
-      } else {
-          console.log("Successfully created user account with uid:", userData.uid);
-          // redirect to map.html
-          $window.location.href='#/map';
-      }
+  $scope.login = function(username, password) {
+    fbAuth.$authWithPassword({
+      email    : username,
+      password : password
+    })
+    .then(function(authData) {
+        $state.go("secure");
+    })
+    .catch(function(error) {
+      console.error("ERROR: " + error);
     });
-  };
+  }
   
-  $scope.loginEmail = function() {
-    var ref = new Firebase("https://fiery-heat-2673.firebaseio.com");
-    var credentials = {
-      email    : $scope.data.email,
-      password : $scope.data.password
-    }
-    ref.authWithPassword(credentials, 
-      function(error, authData) {
-        if (error) {
-          console.log("Login Failed!", error);
-          alert("Login Failed!" + error);
-      } else {
-          console.log("Authenticated successfully with payload:", authData);
-          // redirect to map.html
-          $window.location.href='#/map';      
-      }
+  $scope.register = function(username, password) {
+    fbAuth.$createUser({email: username, password: password}).then(function(userData) {
+      return fbAuth.$authWithPassword({
+        email: username,
+        password: password
+      });
+    })
+    .then(function(authData) {
+      $state.go("secure");
+    })
+    .catch(function(error) {
+      console.error("ERROR: " + error);
     });
-  };
+  }
 
-})
+});
 
-
-pansnap.controller('MapCtrl', function($scope, $state, $ionicHistory, $firebaseArray, $cordovaCamera, $cordovaGeolocation) {
+pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $firebaseArray, $cordovaCamera, $cordovaGeolocation) {
   var options  = { enableHighAccuracy: true};
   var posArray = [];
 
@@ -149,7 +133,8 @@ pansnap.controller('MapCtrl', function($scope, $state, $ionicHistory, $firebaseA
           },
         position  : new google.maps.LatLng(lat, long),
         map       : $scope.map,
-        animation : google.maps.Animation.DROP
+        animation : google.maps.Animation.DROP,
+        position  : latLng
         });
       
       posArray.push(lat, long);
