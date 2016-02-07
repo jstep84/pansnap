@@ -29,12 +29,18 @@ pansnap.config(function($stateProvider, $urlRouterProvider) {
     controller  :  'SecureCtrl'
   })
   
-  /*.state('map', {
+  .state('map', {
     url         : '/map',
     templateUrl : 'templates/map.html',
-    controller  :  'MapCtrl'
+    controller  :  'SecureCtrl'
   })
-*/ 
+
+  .state('profile', {
+    url         : '/profile',
+    templateUrl : 'templates/profile.html',
+    controller  :  'SecureCtrl'
+  })
+ 
   $urlRouterProvider.otherwise("/firebase");
 })
 
@@ -47,7 +53,7 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
       password : password
     })
     .then(function(authData) {
-        $state.go("secure");
+        $state.go("map");
     })
     .catch(function(error) {
       console.error("ERROR: " + error);
@@ -62,7 +68,7 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
       });
     })
     .then(function(authData) {
-      $state.go("secure");
+      $state.go("map");
     })
     .catch(function(error) {
       console.error("ERROR: " + error);
@@ -100,6 +106,8 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
       saveToPhotoAlbum : false
     };
 
+    $state.go("secure");
+
     $cordovaCamera.getPicture(options).then(function(imageData) {
         syncArray.$add({image: imageData}).then(function(){
           alert("Image saved");
@@ -107,7 +115,14 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
       }, function(error) {
           console.error("ERROR: " + error);
     });
-  } 
+  }; 
+
+  $scope.mapBack = function() {
+    $state.go("map");
+  };
+  $scope.toProfile = function() {
+    $state.go("profile");
+  };
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
   
