@@ -1,5 +1,5 @@
 var pansnap = angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
-var fb       = new Firebase("https://fiery-heat-2673.firebaseio.com/");
+var fb      = new Firebase("https://fiery-heat-2673.firebaseio.com/");
 
 pansnap.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -57,8 +57,8 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
   $scope.register = function(username, password) {
     fbAuth.$createUser({email: username, password: password}).then(function(userData) {
       return fbAuth.$authWithPassword({
-        email: username,
-        password: password
+        email    : username,
+        password : password
       });
     })
     .then(function(authData) {
