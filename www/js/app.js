@@ -106,7 +106,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
       saveToPhotoAlbum : false
     };
 
-    $state.go("secure");
+    $state.go("map");
 
     $cordovaCamera.getPicture(options).then(function(imageData) {
         syncArray.$add({image: imageData}).then(function(){
