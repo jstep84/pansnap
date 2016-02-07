@@ -123,6 +123,9 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
   $scope.toProfile = function() {
     $state.go("profile");
   };
+  $scope.toSecure = function() {
+    $state.go("secure");
+  };
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
   
