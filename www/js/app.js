@@ -77,7 +77,7 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
 
 });
 
-pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $firebaseArray, $cordovaCamera, $cordovaGeolocation) {
+pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $firebaseArray, $cordovaCamera) {
   var options  = { enableHighAccuracy: true};
   var posArray = [];
 
@@ -127,7 +127,8 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
     $state.go("secure");
   };
 
-  $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
+
+  /*$cordovaGeolocation.getCurrentPosition(options).then(function(position) {
   
     var lat      = position.coords.latitude;
     var long     = position.coords.longitude;
@@ -162,7 +163,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
     }, 
     function (error) {
       console.log("Could not get a location");
-  });
+  });*/
 });
 
 
