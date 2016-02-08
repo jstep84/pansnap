@@ -107,7 +107,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
   $scope.upload = function() {
     var options = {
       quality          : 75,
-      destinationType  : Camera.DestinationType.DATA_URL,
+      destinationType  : Camera.DestinationType.DATA_URI,
       sourceType       : Camera.PictureSourceType.CAMERA,
       allowEdit        : true,
       encodingType     : Camera.EncodingType.JPEG,
@@ -142,8 +142,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
   };
 
   //  location, map load and position save
-  $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
-    
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position) {  
     //  tag coordinates
     var lat      = position.coords.latitude;
     var long     = position.coords.longitude;
@@ -151,8 +150,9 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
     
     //  settings for map view
     var mapOptions = {
+      timeout   : 5000,
       center    : latLng,
-      zoom      : 18,
+      zoom      : 15,
       mapTypeId : google.maps.MapTypeId.ROADMAP
     };
     
@@ -164,7 +164,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
       var marker = new google.maps.Marker({
         icon : {
           path               : google.maps.SymbolPath.CIRCLE,
-          scale              : 4,
+          scale              : 6,
           color              : 'blue',
           enableHighAccuracy : true,
           },
@@ -183,6 +183,16 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
       console.log("Could not get a location");
   });
 });
+
+
+
+
+
+
+
+
+
+
 
 
 
