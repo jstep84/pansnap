@@ -84,7 +84,7 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
 });
 
 //  Camera and Map controller
-pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $firebaseArray, $cordovaCamera, $cordovaGeolocation) {
+pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $firebaseArray, $cordovaCamera, $cordovaGeolocation) {
   var options  = { enableHighAccuracy: true};
   var posArray = [];
 
