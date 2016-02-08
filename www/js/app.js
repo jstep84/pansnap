@@ -162,7 +162,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
     var mapOptions = {
       timeout   : 5000,
       center    : latLng,
-      zoom      : 15,
+      zoom      : 18,
       mapTypeId : google.maps.MapTypeId.ROADMAP
       };
     
