@@ -103,7 +103,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
       popoverOptions   : CameraPopoverOptions,
       targetWidth      : 500,
       targetHeight     : 500,
-      saveToPhotoAlbum : false
+      saveToPhotoAlbum : true
     };
 
     $state.go("map");
