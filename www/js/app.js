@@ -1,6 +1,8 @@
+//  initiate module, call dependecies and tag database
 var pansnap = angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
 var fb      = new Firebase("https://fiery-heat-2673.firebaseio.com/");
 
+//  ********
 pansnap.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins && window.cordove.plugins.Keyboard) {
@@ -13,6 +15,7 @@ pansnap.run(function($ionicPlatform) {
   });
 })
 
+//  create states
 pansnap.config(function($stateProvider, $urlRouterProvider) { 
   $stateProvider
   
@@ -40,13 +43,15 @@ pansnap.config(function($stateProvider, $urlRouterProvider) {
     templateUrl : 'templates/profile.html',
     controller  :  'SecureCtrl'
   })
- 
+  
   $urlRouterProvider.otherwise("/firebase");
 })
 
+// authorization controller
 pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $window) {
   var fbAuth = $firebaseAuth(fb);
   
+  //  login 
   $scope.login = function(username, password) {
     fbAuth.$authWithPassword({
       email    : username,
@@ -60,6 +65,7 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
     });
   }
   
+  //  sign up 
   $scope.register = function(username, password) {
     fbAuth.$createUser({email: username, password: password}).then(function(userData) {
       return fbAuth.$authWithPassword({
@@ -77,13 +83,17 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
 
 });
 
+//  Camera and Map controller
 pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $firebaseArray, $cordovaCamera, $cordovaGeolocation) {
   var options  = { enableHighAccuracy: true};
   var posArray = [];
 
-  $ionicHistory.clearHistory();
+  //  $ionicHistory.currentView();
+  
+  //  empty array to store pics
   $scope.images = [];
 
+  //  test if user is authorized
   var fbAuth = fb.getAuth();
   if(fbAuth) {
     var userReference = fb.child("users/" + fbAuth.uid);
@@ -93,6 +103,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
     $state.go("firebase");
   }
 
+  //  picture upload settings
   $scope.upload = function() {
     var options = {
       quality          : 75,
@@ -103,11 +114,13 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
       popoverOptions   : CameraPopoverOptions,
       targetWidth      : 500,
       targetHeight     : 500,
-      saveToPhotoAlbum : true
+      saveToPhotoAlbum : false
     };
 
+    //  send user to map page
     $state.go("map");
 
+    //  open device camera, send picture to image array
     $cordovaCamera.getPicture(options).then(function(imageData) {
         syncArray.$add({image: imageData}).then(function(){
           alert("Image saved");
@@ -117,6 +130,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
     });
   }; 
 
+  //  define click functions for view buttons
   $scope.mapBack = function() {
     $state.go("map");
   };
@@ -127,21 +141,25 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
     $state.go("secure");
   };
 
-
+  //  location, map load and position save
   $cordovaGeolocation.getCurrentPosition(options).then(function(position) {
-  
+    
+    //  tag coordinates
     var lat      = position.coords.latitude;
     var long     = position.coords.longitude;
     var latLng   = new google.maps.LatLng(lat, long);
     
+    //  settings for map view
     var mapOptions = {
       center    : latLng,
       zoom      : 18,
       mapTypeId : google.maps.MapTypeId.ROADMAP
     };
     
+    //  create map
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
+    
+    //  function for marker
     google.maps.event.addListenerOnce($scope.map, 'idle', function() {
       var marker = new google.maps.Marker({
         icon : {
@@ -156,9 +174,9 @@ pansnap.controller('SecureCtrl', function($scope, $state, $ionicHistory, $fireba
         position  : latLng
         });
       
+      //  push lat/long to array
       posArray.push(lat, long);
       console.log(posArray);
-    
      });
     }, 
     function (error) {
