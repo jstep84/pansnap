@@ -24,6 +24,6 @@
 <ul>
 	<li><a href="https://github.com/jstep84/pansnap/blob/master/resources/wireframes.png">Wireframes</a></li>		
 	<li><a href="https://github.com/jstep84/pansnap/blob/master/userstories.md">User Stories</a></li>	
-	<li><a href="">Link to project</a></li>	
+	<li><a href="https://pansnap.herokuapp.com">Link to project</a></li>	
 </ul>
 
