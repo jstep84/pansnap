@@ -22,7 +22,7 @@
 
 <h2>Links</h2>
 <ul>
-	<li>[Wireframes](resources/wireframes.PNG)</li>		
+	<li>[Wireframes](docs/resources/wireframes.PNG)</li>		
 	<li></li>		
 </ul>
 
