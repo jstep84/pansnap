@@ -22,7 +22,7 @@
 
 <h2>Links</h2>
 <ul>
-	<li>Wireframes(/resources/wireframes.png)</li>		
+	<li><a href="https://github.com/jstep84/pansnap/blob/master/resources/wireframes.png">Wireframes</a></li>		
 	<li></li>		
 </ul>
 
