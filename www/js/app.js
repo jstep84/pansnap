@@ -85,8 +85,6 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
 
 //  Camera and Map controller
 pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $firebaseArray, $cordovaCamera, $cordovaGeolocation) {
-  var options  = { enableHighAccuracy: true};
-  var posArray = [];
 
   //  $ionicHistory.currentView();
   
@@ -141,20 +139,32 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
     $state.go("secure");
   };
 
-  //  location, map load and position save
-  $cordovaGeolocation.getCurrentPosition(options).then(function(position) {  
-    //  tag coordinates
-    var lat      = position.coords.latitude;
-    var long     = position.coords.longitude;
-    var latLng   = new google.maps.LatLng(lat, long);
-    
-    //  settings for map view
+  //  array to collect location data
+  var posArray = [];
+  //  tracking settings
+  var watchOptions = {timeout : 5000, enableHighAccuracy: true};
+  //  location watch, map load and position save
+  var watch = $cordovaGeolocation.watchPosition(watchOptions);
+  console.log('listening');
+
+  watch.then(
+   null,
+   
+   function(err) {
+      console.log(err)
+   },
+   
+   // collect user position
+   function(position) {
+    var lat  = position.coords.latitude
+    var long = position.coords.longitude
+    var latLng   = new google.maps.LatLng(lat, long)
     var mapOptions = {
       timeout   : 5000,
       center    : latLng,
       zoom      : 15,
       mapTypeId : google.maps.MapTypeId.ROADMAP
-    };
+      };
     
     //  create map
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
@@ -177,12 +187,18 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
       //  push lat/long to array
       posArray.push(lat, long);
       console.log(posArray);
-     });
+      });
     }, 
     function (error) {
       console.log("Could not get a location");
+    }, 
+    function(err) {
+      console.log(err)
   });
 });
+
+
+
 
 
 
