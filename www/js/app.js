@@ -116,7 +116,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
     };
 
     //  send user to map page
-    $state.go("map");
+    $state.go("secure");
 
     //  open device camera, send picture to image array
     $cordovaCamera.getPicture(options).then(function(imageData) {
@@ -189,13 +189,13 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
       console.log(posArray);
 
       //  link lat/long points on array with polylines
-      var polyLine = new google.maps.Polyline({
+      /*var polyLine = new google.maps.Polyline({
         path: posArray,
         geodesic: true,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
         strokeWeight: 2
-      });
+      });*/
     });
     }, 
     function (error) {
