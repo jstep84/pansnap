@@ -61,7 +61,7 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
         $state.go("map");
     })
     .catch(function(error) {
-      console.error("ERROR: " + error);
+      alert("ERROR: " + error);
     });
   }
   
@@ -77,7 +77,7 @@ pansnap.controller('FirebaseCtrl', function($scope, $state, $firebaseAuth, $wind
       $state.go("map");
     })
     .catch(function(error) {
-      console.error("ERROR: " + error);
+      alert("ERROR: " + error);
     });
   }
 
