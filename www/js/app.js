@@ -105,7 +105,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
   $scope.upload = function() {
     var options = {
       quality          : 75,
-      destinationType  : Camera.DestinationType.DATA_URI,
+      destinationType  : Camera.DestinationType.DATA_URL,
       sourceType       : Camera.PictureSourceType.CAMERA,
       allowEdit        : true,
       encodingType     : Camera.EncodingType.JPEG,
@@ -115,7 +115,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
       saveToPhotoAlbum : false
     };
 
-    //  send user to map page
+    //  send user to gallery page
     $state.go("secure");
 
     //  open device camera, send picture to image array
