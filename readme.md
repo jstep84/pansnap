@@ -21,7 +21,8 @@
 <p>After forking the repo, run an npm install to grab the needed dependencies.</p>
 
 <h2>Links</h2>
-<a href="https://github.com/jstep84/pansnap/blob/master/resources/wireframes.PNG">user stories</a>
-<a href="">wireframes</a>
-
+<ul>
+	<li>[Wireframes](resources/wireframes.PNG)</li>		
+	<li></li>		
+</ul>
 
