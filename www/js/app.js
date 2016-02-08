@@ -112,7 +112,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
       popoverOptions   : CameraPopoverOptions,
       targetWidth      : 500,
       targetHeight     : 500,
-      saveToPhotoAlbum : false
+      saveToPhotoAlbum : true
     };
 
     //  send user to gallery page
