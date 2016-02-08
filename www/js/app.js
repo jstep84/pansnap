@@ -142,7 +142,7 @@ pansnap.controller('SecureCtrl', function($scope, $state, /*$ionicHistory,*/ $fi
   //  array to collect location data
   var posArray = [];
   //  tracking settings
-  var watchOptions = {timeout : 5000, enableHighAccuracy: true};
+  var watchOptions = {timeout : 15000, enableHighAccuracy: true};
   //  location watch, map load and position save
   var watch = $cordovaGeolocation.watchPosition(watchOptions);
   console.log('listening');
