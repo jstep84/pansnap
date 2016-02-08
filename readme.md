@@ -1,5 +1,5 @@
 <h1>Pansnap</h1>
-![Alt text](http://github.com/jstep84/pansnap/resources/screenshot.png)
+![Alt text](https://github.com/jstep84/pansnap/blob/master/resources/screenshot.PNG)
 <h2>About</h2>
 <p>Pansnap is an urban hiking app created for iOS and Android devices. It is designed to gather and track the user's location, ping the user on a map and use the built-in camera to snap pictures and ping the picture location on the user's route. 
 
